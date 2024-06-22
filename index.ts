@@ -126,11 +126,15 @@ import {
     str(")")
   );
   
+const stops = (chars: string[]) => (input: string) => {
+  return or(...chars.map(char))(input);
+}
+
   /* Inline Parsers */
   
   export const inlineTextParser: Parser<InlineText> = seqC(
     set("type", "inline-text"),
-    capture(manyTillOneOf(["*", "`", "[", "\n"]), "content")
+    capture(many1Till(stops(["*", "`", "[", "\n"])), "content")
   );
   
   export const inlineBoldParser: Parser<InlineBold> = seqC(
@@ -206,8 +210,8 @@ import {
   );
 
 
-  const contents = fs.readFileSync("./TEST.md", "utf-8")
+  const contents = fs.readFileSync("./TEST.md", "utf-8").trim()
   console.log(contents)
-  parserDebug("markdownParser", () => {
+  //parserDebug("markdownParser", () => {
   console.log(markdownParser(contents))
-  })
+  //})
