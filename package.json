@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/node": "^20.14.8",
     "tarsec": "^0.0.18"
   }
 }
