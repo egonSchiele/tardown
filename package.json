@@ -14,6 +14,7 @@
   "description": "",
   "dependencies": {
     "@types/node": "^20.14.8",
-    "tarsec": "^0.0.18"
+    "tarsec": "^0.0.18",
+    "typescript": "^5.5.2"
   }
 }
