@@ -55,5 +55,7 @@ export declare const inlineLinkParser: Parser<InlineLink>;
 export declare const inlineCodeParser: Parser<InlineCode>;
 export declare const inlineMarkdownParser: Parser<InlineMarkdown>;
 export declare function paragraphParser(input: string): ParserResult<Paragraph>;
-export declare const markdownParser: Parser<string | (Paragraph | Heading | CodeBlock | BlockQuote | Image)[] | null>;
+export declare const markdownParser: Parser<{
+    content: (Paragraph | Heading | CodeBlock | BlockQuote | Image)[];
+}>;
 export {};

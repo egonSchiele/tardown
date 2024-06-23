@@ -1,5 +1,5 @@
 import fs from "fs";
-import { seqC, capture, optional, many1Till, or, manyTillStr, count, iManyTillStr, sepBy, seq, many1, str, spaces, word, char, eof, set, success } from "tarsec";
+import { seqC, capture, optional, many1Till, or, manyTillStr, count, iManyTillStr, sepBy, many1, str, spaces, word, char, eof, set, success } from "tarsec";
 /* Parsers */
 export const headingParser = seqC(set("type", "heading"), capture(count(char("#")), "level"), spaces, capture(many1Till(or(char("\n"), eof)), "content"));
 export const codeBlockParser = seqC(set("type", "code-block"), str("```"), capture(optional(word), "language"), optional(spaces), capture(manyTillStr("```"), "content"), str("```"));
@@ -31,15 +31,15 @@ export function paragraphParser(input) {
     }, inline.rest);
 }
 /* Markdown Parser */
-export const markdownParser = seq([
-    optional(spaces),
-    sepBy(spaces, or(headingParser, codeBlockParser, blockQuoteParser, 
-    /*         listParser,
-     */ paragraphParser, imageParser)),
-    optional(spaces),
-], (r, c) => r[1]);
+export const markdownParser = seqC(optional(spaces), capture(sepBy(spaces, or(headingParser, codeBlockParser, blockQuoteParser, 
+/*         listParser,
+ */ paragraphParser, imageParser)), "content"), optional(spaces));
 const contents = fs.readFileSync("./TEST.md", "utf-8").trim();
 console.log(contents);
 //parserDebug("markdownParser", () => {
-console.log(markdownParser(contents));
+const res = markdownParser(contents);
+console.log(res);
+if (res.success) {
+    console.log(JSON.stringify(res.result, null, 2));
+}
 //})

@@ -111,11 +111,11 @@ import {
     capture(manyTillStr("\n"), "content")
   );
   
-  /* export const listParser: Parser<List> = many1(
-    seqC(oneOf("-*"), spaces, capture(manyTillStr("\n"), "item"))
+/*    export const listParser: Parser<List> = many1(
+    seqC(oneOf("-*"), spaces, capture(manyTillStr("\n"), "items"))
   );
-  
-   */
+ */  
+   
   
   export const imageParser: Parser<Image> = seqC(
     set("type", "image"),
@@ -190,10 +190,10 @@ const stops = (chars: string[]) => (input: string) => {
   }
   
   /* Markdown Parser */
-  export const markdownParser = seq(
-    [
+  export const markdownParser = seqC(
+    
       optional(spaces),
-      sepBy(
+      capture(sepBy(
         spaces,
         or(
           headingParser,
@@ -203,15 +203,18 @@ const stops = (chars: string[]) => (input: string) => {
            */ paragraphParser,
           imageParser
         )
-      ),
+      ), "content"),
       optional(spaces),
-    ],
-    (r, c) => r[1]
   );
 
 
   const contents = fs.readFileSync("./TEST.md", "utf-8").trim()
   console.log(contents)
   //parserDebug("markdownParser", () => {
-  console.log(markdownParser(contents))
+  const res = markdownParser(contents)
+  console.log(res)
+
+  if (res.success) {
+    console.log(JSON.stringify(res.result, null, 2))
+  }
   //})
