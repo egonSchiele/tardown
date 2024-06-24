@@ -29,4 +29,18 @@ while (true) {
     break;
   }
 }
-export {};
+
+
+const cParser = char("c");
+rest = "ccc";
+while (true) {
+  const result = cParser(rest);
+  console.log({ result });
+  if (result.success) {
+    rest = result.rest;
+  } else {
+    break;
+  }
+}
+
+export { };
