@@ -1,17 +1,4 @@
-import {
-  capture,
-  char,
-  count,
-  eof,
-  many1,
-  many1Till,
-  or,
-  Parser,
-  seqC,
-  seqR,
-  set,
-  spaces,
-} from "tarsec";
+import { char, eof, many1, many1Till, or, seqR, spaces } from "tarsec";
 
 const headingParser = seqR(
   many1(char("#")),
