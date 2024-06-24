@@ -28,6 +28,6 @@ console.log("b", aParser("b"));
 console.log("bParser");
 console.log("a", bParser("a"));
 console.log("b", bParser("b"));
+console.log("bbb", bParser("bbb"));
 
-//console.log("and", aParser("and"));
 export {};

@@ -21,4 +21,6 @@ console.log("bParser");
 console.log("a", bParser("a"));
 console.log("b", bParser("b"));
 
+console.log("bbb", bParser("bbb"));
+
 export {};
